@@ -1,0 +1,25 @@
+<h2>Procesando tu pago…</h2>
+<div id="estado"></div>
+<div id="descarga"></div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const order_id = params.get("order_id");
+
+async function check() {
+  const r = await fetch(`/api/status?order_id=${encodeURIComponent(order_id)}`);
+  const data = await r.json();
+
+  document.getElementById("estado").textContent = `Estado: ${data.status || "unknown"}`;
+
+  if (data.status === "approved") {
+    document.getElementById("descarga").innerHTML =
+      `<a href="/download?order_id=${encodeURIComponent(order_id)}">Descargar PDF</a>`;
+    return;
+  }
+  setTimeout(check, 1500);
+}
+
+if (order_id) check();
+else document.getElementById("estado").textContent = "Falta order_id";
+</script>
