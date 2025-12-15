@@ -66,32 +66,35 @@
     document.getElementById("y").textContent = new Date().getFullYear();
   </script>
   <script>
-document.getElementById("btnPagar").addEventListener("click", async () => {
-  try {
-    const r = await fetch("/api/create-preference", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({ title: "Empanada casera", price: 10 })
-    });
+console.log("SCRIPT DE PAGO CARGADO ✅");
 
-    const text = await r.text();         // <-- vemos lo que realmente responde
-    console.log("create-preference status:", r.status);
-    console.log("create-preference response:", text);
+const btn = document.getElementById("btnPagar");
+console.log("btnPagar =", btn);
 
-    let data = {};
-    try { data = JSON.parse(text); } catch {}
+btn.addEventListener("click", async () => {
+  alert("CLICK ✅");
+  console.log("CLICK EVENT ✅");
 
-    if (!r.ok || !data.init_point) {
-      alert("No se pudo iniciar el pago. Abrí F12 > Console y mirá el log.");
-      return;
-    }
+  const r = await fetch("/api/create-preference", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ title: "Empanada casera", price: 10 })
+  });
 
-    window.location.href = data.init_point;
-  } catch (e) {
-    console.error("Error al iniciar pago:", e);
-    alert("Error de red o script. Mirá F12 > Console.");
+  const text = await r.text();
+  console.log("STATUS:", r.status);
+  console.log("RESPUESTA:", text);
+
+  let data = {};
+  try { data = JSON.parse(text); } catch {}
+
+  if (!r.ok || !data.init_point) {
+    alert("FALLÓ. Mirá Console y Network.");
+    return;
   }
+
+  window.location.href = data.init_point;
 });
-</script>
 </body>
+
 </html>
