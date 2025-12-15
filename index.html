@@ -66,21 +66,32 @@
     document.getElementById("y").textContent = new Date().getFullYear();
   </script>
   <script>
-    document.getElementById("btnPagar").addEventListener("click", async () => {
-      const r = await fetch("/api/create-preference", {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({ title: "Empanada casera", price: 10 })
-      });
-
-      const data = await r.json();
-      if (!data.init_point) {
-        alert("No se pudo iniciar el pago. Intenta de nuevo.");
-        return;
-      }
-
-      window.location.href = data.init_point; // manda a Mercado Pago
+document.getElementById("btnPagar").addEventListener("click", async () => {
+  try {
+    const r = await fetch("/api/create-preference", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ title: "Empanada casera", price: 10 })
     });
-  </script>
+
+    const text = await r.text();         // <-- vemos lo que realmente responde
+    console.log("create-preference status:", r.status);
+    console.log("create-preference response:", text);
+
+    let data = {};
+    try { data = JSON.parse(text); } catch {}
+
+    if (!r.ok || !data.init_point) {
+      alert("No se pudo iniciar el pago. Abrí F12 > Console y mirá el log.");
+      return;
+    }
+
+    window.location.href = data.init_point;
+  } catch (e) {
+    console.error("Error al iniciar pago:", e);
+    alert("Error de red o script. Mirá F12 > Console.");
+  }
+});
+</script>
 </body>
 </html>
