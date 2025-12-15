@@ -47,9 +47,7 @@
           Crujientes por fuera, suaves por dentro y con sabor dominicano 🇩🇴
         </p>
 
-        <a class="btn" href="receta-empanadas.html">
-          Ver receta
-        </a>
+        <button id="btnPagar">Pagar para descargar receta</button>
       </div>
 
       <div class="card">
@@ -66,6 +64,23 @@
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+  <script>
+    document.getElementById("btnPagar").addEventListener("click", async () => {
+      const r = await fetch("/api/create-preference", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ title: "Empanada casera", price: 10 })
+      });
+
+      const data = await r.json();
+      if (!data.init_point) {
+        alert("No se pudo iniciar el pago. Intenta de nuevo.");
+        return;
+      }
+
+      window.location.href = data.init_point; // manda a Mercado Pago
+    });
   </script>
 </body>
 </html>
