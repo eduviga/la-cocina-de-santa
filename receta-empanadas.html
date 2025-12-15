@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Empanadas caseras | La Cocina de Santa</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Arial;margin:0;background:#faf7f2;color:#1f1f1f}
+    header{padding:22px 18px;background:#fff;border-bottom:1px solid #eee}
+    .wrap{max-width:920px;margin:0 auto;padding:22px 18px}
+    .card{background:#fff;border:1px solid #eee;border-radius:14px;padding:18px;box-shadow:0 8px 20px rgba(0,0,0,.04)}
+    a.btn{display:inline-block;padding:12px 14px;border-radius:10px;background:#1f6f3d;color:#fff;text-decoration:none;font-weight:700}
+    .muted{color:#555}
+    ul{margin:10px 0 0 18px}
+  </style>
+</head>
+<body>
+  <header>
+    <b><a href="index.html" style="text-decoration:none;color:#1f6f3d">← La Cocina de Santa</a></b>
+  </header>
+
+  <main class="wrap">
+    <div class="card">
+      <h1>Empanadas caseras</h1>
+      
+      <p class="muted">Vista previa gratuita. La receta completa está en PDF.</p>
+
+      <h2>Ingredientes (vista previa)</h2>
+      <ul>
+        <li>Harina</li>
+        <li>Sal</li>
+        <li>Relleno (a elección)</li>
+      </ul>
+
+      <h2>Pasos (vista previa)</h2>
+      <ol>
+        <li>Preparar la masa (resumen).</li>
+        <li>Armar el relleno (resumen).</li>
+        <li>Cocción (resumen).</li>
+      </ol>
+
+      <hr style="border:none;border-top:1px solid #eee;margin:16px 0">
+
+      <p><b>Descarga la receta completa (PDF)</b> pagando por Mercado Pago:</p>
+
+      <hr style="border:none;border-top:1px solid #eee;margin:16px 0">
+
+      <p><b>Receta completa (PDF)</b></p>
+      <p class="muted">Incluye cantidades exactas, tiempos, tips y variantes.</p>
+
+      <p style="margin:10px 0 12px;"><b>Precio:</b> (poné tu precio acá)</p>
+
+      <button class="btn" id="buyBtn">Pagar con Mercado Pago y descargar</button>
+
+      <script>
+        document.getElementById("buyBtn").addEventListener("click", async () => {
+          const base = window.location.origin;
+
+          const res = await fetch("/.netlify/functions/create_preference", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title: "Receta completa – Empanadas (La Cocina de Santa)",
+              price: 10,
+              successUrl: `${base}/gracias.html`,
+              pendingUrl: `${base}/pendiente.html`,
+              failureUrl: `${base}/fallo.html`,
+            }),
+          });
+
+          const data = await res.json();
+          if (data.init_point) {
+            window.location.href = data.init_point;
+          } else {
+            alert("No se pudo iniciar el pago. Revisá la configuración.");
+            console.log(data);
+          }
+        });
+      </script>
+
+      <p class="muted" style="margin-top:12px;">
+        Después de pagar, volvé a esta página y entrá en “Descarga” (o guardá el comprobante).
+      </p>
+
+      <p style="margin-top:14px;">
+        <a href="descarga-empanadas.html" style="color:#1f6f3d;font-weight:700;text-decoration:none;">
+          Ya pagué → Ir a descarga
+        </a>
+      </p>
+
+      <p class="muted" style="margin-top:10px">
+        Luego del pago, Mercado Pago te va a devolver a la página de descarga.
+      </p>
+    </div>
+  </main>
+</body>
+</html>
