@@ -47,7 +47,7 @@
           Crujientes por fuera, suaves por dentro y con sabor dominicano 🇩🇴
         </p>
 
-        <button id="btnPagar">Pagar para descargar receta</button>
+        <button id="btnPagar" type="button">Pagar para descargar receta</button>
       </div>
 
       <div class="card">
@@ -63,38 +63,21 @@
   </footer>
 
   <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-  </script>
-  <script>
-console.log("SCRIPT DE PAGO CARGADO ✅");
-
-const btn = document.getElementById("btnPagar");
-console.log("btnPagar =", btn);
-
-btn.addEventListener("click", async () => {
-  alert("CLICK ✅");
-  console.log("CLICK EVENT ✅");
-
-  const r = await fetch("/api/create-preference", {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ title: "Empanada casera", price: 10 })
+      document.getElementById("y").textContent = new Date().getFullYear();
+    </script>
+    <script>
+  document.getElementById("btnPagar").addEventListener("click", async () => {
+    const r = await fetch("/api/create-preference", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ title: "Empanada casera", price: 10 })
+    });
+  
+    const data = await r.json();
+    window.location.href = data.init_point;
   });
-
-  const text = await r.text();
-  console.log("STATUS:", r.status);
-  console.log("RESPUESTA:", text);
-
-  let data = {};
-  try { data = JSON.parse(text); } catch {}
-
-  if (!r.ok || !data.init_point) {
-    alert("FALLÓ. Mirá Console y Network.");
-    return;
-  }
-
-  window.location.href = data.init_point;
-});
+</script>
 </body>
 
 </html>
+
