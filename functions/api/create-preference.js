@@ -3,18 +3,21 @@ export async function onRequestPost({ request, env }) {
 
   const order_id = crypto.randomUUID();
 
-  const baseUrl = "https://la-cocina-de-santa.pages.dev";
-  const payload = {
-    items: [{ title, quantity: 1, unit_price: Number(price) }],
-    external_reference: order_id,
-    back_urls: {
-      success: `${baseUrl}/gracias/?order_id=${order_id}`,
-      pending: `${baseUrl}/gracias/?order_id=${order_id}`,
-      failure: `${baseUrl}/gracias/?order_id=${order_id}`
-    },
-    auto_return: "approved",
-    notification_url: `${baseUrl}/api/webhook`
-  };
+   
+
+const baseUrl = "https://la-cocina-de-santa.pages.dev";
+
+const payload = {
+  items: [{ title, quantity: 1, unit_price: Number(price) }],
+  external_reference: order_id,
+  back_urls: {
+    success: `${baseUrl}/gracias/?order_id=${order_id}`,
+    pending: `${baseUrl}/gracias/?order_id=${order_id}`,
+    failure: `${baseUrl}/gracias/?order_id=${order_id}`
+  },
+  auto_return: "approved",
+  notification_url: `${baseUrl}/api/webhook`
+};
 
   const resp = await fetch("https://api.mercadopago.com/checkout/preferences", {
     method: "POST",
@@ -41,3 +44,4 @@ export async function onRequestPost({ request, env }) {
   });
 
 }
+
