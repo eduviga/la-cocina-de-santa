@@ -1,25 +1,72 @@
-<h2>Procesando tu pago…</h2>
-<div id="estado"></div>
-<div id="descarga"></div>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pago - La Cocina de Santa</title>
+  <style>
+    body{font-family:system-ui,Arial,sans-serif;margin:0;padding:24px;background:#0b0b0b;color:#fff}
+    .card{max-width:720px;margin:0 auto;background:#151515;border:1px solid #2a2a2a;border-radius:14px;padding:18px}
+    h1{margin:0 0 10px;font-size:22px}
+    p{margin:8px 0;line-height:1.4;color:#d7d7d7}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    a.btn, button.btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid #3a3a3a;background:#222;color:#fff;text-decoration:none;cursor:pointer}
+    .ok{color:#7CFF8A}
+    .bad{color:#FF7C7C}
+    code{background:#222;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Procesando tu pago…</h1>
+    <p id="estado">Buscando estado del pago.</p>
+    <p id="detalle"></p>
 
-<script>
-const params = new URLSearchParams(location.search);
-const order_id = params.get("order_id");
+    <div class="row" id="acciones" style="display:none">
+      <a class="btn" href="/" >Volver al inicio</a>
+      <a class="btn" id="btnDescargar" href="#">Descargar archivo</a>
+    </div>
+  </div>
 
-async function check() {
-  const r = await fetch(`/api/status?order_id=${encodeURIComponent(order_id)}`);
-  const data = await r.json();
+  <script>
+    const params = new URLSearchParams(location.search);
+    const order_id = params.get("order_id");
 
-  document.getElementById("estado").textContent = `Estado: ${data.status || "unknown"}`;
+    const estadoEl = document.getElementById("estado");
+    const detalleEl = document.getElementById("detalle");
+    const accionesEl = document.getElementById("acciones");
+    const btnDescargar = document.getElementById("btnDescargar");
 
-  if (data.status === "approved") {
-    document.getElementById("descarga").innerHTML =
-      `<a href="/download?order_id=${encodeURIComponent(order_id)}">Descargar PDF</a>`;
-    return;
-  }
-  setTimeout(check, 1500);
-}
+    if (!order_id) {
+      estadoEl.innerHTML = '<span class="bad">Falta order_id en la URL.</span>';
+      detalleEl.textContent = "Volvé a pagar desde la página principal.";
+    } else {
+      detalleEl.innerHTML = 'Orden: <code>' + order_id + '</code>';
 
-if (order_id) check();
-else document.getElementById("estado").textContent = "Falta order_id";
-</script>
+      async function check() {
+        const r = await fetch(`/api/status?order_id=${encodeURIComponent(order_id)}`);
+        const data = await r.json();
+
+        if (data.status === "approved") {
+          estadoEl.innerHTML = '<span class="ok">Pago aprobado ✅</span> Ya podés descargar.';
+          btnDescargar.href = `/download?order_id=${encodeURIComponent(order_id)}`;
+          accionesEl.style.display = "flex";
+          return;
+        }
+
+        if (data.status === "rejected") {
+          estadoEl.innerHTML = '<span class="bad">Pago rechazado ❌</span>';
+          accionesEl.style.display = "flex";
+          btnDescargar.style.display = "none";
+          return;
+        }
+
+        estadoEl.textContent = `Estado: ${data.status || "unknown"} (actualizando…)`;
+        setTimeout(check, 1500);
+      }
+
+      check();
+    }
+  </script>
+</body>
+</html>
