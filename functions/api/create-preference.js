@@ -16,8 +16,8 @@ const payload = {
     failure: `${baseUrl}/gracias/?order_id=${order_id}`
   },
   auto_return: "approved",
-  binary_mode: "true",
-  notification_url: `${baseUrl}/api/webhook
+  binary_mode: true,
+  notification_url: `${baseUrl}/api/webhook`
 };
 
   const resp = await fetch("https://api.mercadopago.com/checkout/preferences", {
@@ -45,6 +45,7 @@ const payload = {
   });
 
 }
+
 
 
 
