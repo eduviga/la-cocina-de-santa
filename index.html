@@ -70,7 +70,7 @@
     const r = await fetch("/api/create-preference", {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({ title: "Empanada casera", price: 10 })
+      body: JSON.stringify({ title: "Arepa Dominicana", price: 10 })
     });
   
     const data = await r.json();
@@ -80,4 +80,5 @@
 </body>
 
 </html>
+
 
