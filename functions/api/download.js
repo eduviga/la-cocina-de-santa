@@ -11,7 +11,7 @@ export async function onRequestGet({ request, env }) {
   }
 
   // Archivo “de prueba”
-  const key = "empanada-casera.pdf";
+  const key = "arepa-dominicana.pdf";
 
   const obj = await env.FILES.get(key);
   if (!obj) return new Response("Archivo no encontrado", { status: 404 });
@@ -22,4 +22,5 @@ export async function onRequestGet({ request, env }) {
       "Content-Disposition": `attachment; filename="${key}"`
     }
   });
+
 }
