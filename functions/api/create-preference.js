@@ -16,7 +16,7 @@ const payload = {
     failure: `${baseUrl}/gracias/?order_id=${order_id}`
   },
   auto_return: "approved",
-  binary_mode: true,
+  binary_mode: "true",
   notification_url: `${baseUrl}/api/webhook
 };
 
@@ -45,5 +45,6 @@ const payload = {
   });
 
 }
+
 
 
