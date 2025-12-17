@@ -9,8 +9,13 @@
     header{padding:28px 18px;text-align:center;background:#fff;border-bottom:1px solid #eee}
     h1{margin:0;font-size:32px}
     p{margin:8px 0 0;color:#444}
-    .wrap{max-width:920px;margin:0 auto;padding:22px 18px}
 
+    .howTop{width:100%;background:#fff;border-bottom:1px solid #eee;padding:14px 18px}
+    .howTop .inner{max-width:920px;margin:0 auto}
+    .howTop h2{margin:0 0 6px;font-size:18px}
+    .howTop ol{margin:0;padding-left:18px;line-height:1.5;color:#444}
+
+    .wrap{max-width:920px;margin:0 auto;padding:22px 18px}
     .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
     .card{background:#fff;border:1px solid #eee;border-radius:14px;padding:18px;box-shadow:0 8px 20px rgba(0,0,0,.04)}
 
@@ -19,24 +24,13 @@
       padding:12px 14px;
       border-radius:10px;
       border:none;
-      background: linear-gradient(135deg,#f97316,#f59e0b);
+      background:#1f6f3d; /* color original */
       color:#fff;
       font-weight:700;
       cursor:pointer;
       margin-top:10px;
     }
 
-    .howTop{
-      width:100%;
-      background: linear-gradient(90deg,#fff7ed,#ffedd5);
-      border-bottom:1px solid #f3d6b5;
-      padding:14px 18px;
-    }
-    .howTop .inner{max-width:920px;margin:0 auto}
-    .howTop h2{margin:0 0 6px;font-size:18px}
-    .howTop ol{margin:0;padding-left:18px;line-height:1.5;color:#3d3d3d}
-
-    a.link{color:#1f6f3d;text-decoration:none;font-weight:600}
     footer{padding:22px 18px;text-align:center;color:#666}
   </style>
 </head>
@@ -47,16 +41,14 @@
     <p>Recetas caseras con sabor dominicano 🇩🇴</p>
   </header>
 
-  <!-- Como funciona ARRIBA de todo, ancho completo -->
+  <!-- Cómo funciona arriba de todo, ancho completo -->
   <section class="howTop">
     <div class="inner">
       <h2>¿Cómo funciona?</h2>
       <ol>
-        <li>Elegis la receta que te gusta</b>.</li>
         <li>Tocás <b>Pagar para descargar receta</b>.</li>
         <li>Pagás en Mercado Pago.</li>
         <li>Volvés y se habilita la <b>descarga</b> automáticamente.</li>
-        
       </ol>
     </div>
   </section>
@@ -77,9 +69,7 @@
           "
         >
 
-        <p style="font-weight:700;margin-top:6px;">
-          Arepa Dominicana
-        </p>
+        <p style="font-weight:600;margin-top:6px;">Arepa Dominicana</p>
 
         <p style="color:#555;margin:0;">
           Crujiente por fuera, suave por dentro. Ideal para desayuno o merienda.
@@ -87,8 +77,6 @@
 
         <button id="btnPagar" class="btnPay" type="button">Pagar para descargar receta</button>
       </div>
-
-      
     </section>
   </main>
 
@@ -117,6 +105,7 @@
   </script>
 </body>
 </html>
+
 
 
 
