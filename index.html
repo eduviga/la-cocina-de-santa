@@ -1,84 +1,51 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>La Cocina de Santa</title>
-  <style>
-    body{font-family:system-ui,Segoe UI,Arial;margin:0;background:#faf7f2;color:#1f1f1f}
-    header{padding:28px 18px;text-align:center;background:#fff;border-bottom:1px solid #eee}
-    h1{margin:0;font-size:32px}
-    p{margin:8px 0 0;color:#444}
-    .wrap{max-width:920px;margin:0 auto;padding:22px 18px}
-    .card{background:#fff;border:1px solid #eee;border-radius:14px;padding:18px;box-shadow:0 8px 20px rgba(0,0,0,.04)}
-    .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-    a.btn{display:inline-block;padding:12px 14px;border-radius:10px;background:#1f6f3d;color:#fff;text-decoration:none;font-weight:600}
-    a.link{color:#1f6f3d;text-decoration:none;font-weight:600}
-    footer{padding:22px 18px;text-align:center;color:#666}
-  </style>
-</head>
-<body>
-  <header>
-    <h1>La Cocina de Santa</h1>
-    <p>Recetas caseras con sabor dominicano 🇩🇴</p>
-  </header>
+<!-- BARRA "CÓMO FUNCIONA" (ancho completo) -->
+<section class="how">
+  <div class="how-inner">
+    <h2>¿Cómo funciona?</h2>
+    <ol>
+      <li>Tocás <b>Pagar para descargar</b>.</li>
+      <li>Pagás en Mercado Pago.</li>
+      <li>Volvés y se habilita la <b>descarga</b> automáticamente.</li>
+    </ol>
+  </div>
+</section>
 
-  <main class="wrap">
-    <section class="grid">
-      <div class="card">
-        <h2>Receta destacada</h2>
+<!-- RECETAS (media hoja aprox) -->
+<section class="recipes">
+  <h2 class="recipes-title">Recetas destacadas</h2>
 
-        <img 
-          src="img/empanadas.jpg" 
-          alt="Empanadas caseras de La Cocina de Santa"
-          style="
-            width:100%;
-            border-radius:14px;
-            margin:10px 0;
-            box-shadow:0 10px 24px rgba(0,0,0,.15);
-          "
-        >
+  <div class="recipes-track">
+    <!-- CARD 1 -->
+    <article class="recipe-card">
+      <img class="recipe-img" src="img/arepa.jpg" alt="Arepa dominicana">
+      <div class="recipe-body">
+        <h3>Arepa dominicana</h3>
+        <p>Crujiente por fuera, suave por dentro. Ideal para desayuno o merienda.</p>
+        <ul>
+          <li><b>Tiempo:</b> 20–30 min</li>
+          <li><b>Rinde:</b> 4–6</li>
+        </ul>
 
-        <p style="font-weight:600;margin-top:6px;">
-          Empanadas caseras
-        </p>
-
-        <p style="color:#555;">
-          Crujientes por fuera, suaves por dentro y con sabor dominicano 🇩🇴
-        </p>
-
-        <button id="btnPagar" type="button">Pagar para descargar receta</button>
+        <!-- Tu botón pagar -->
+        <button id="btnPagar" class="btn primary" type="button">Pagar para descargar receta</button>
       </div>
+    </article>
 
-      <div class="card">
-        <h2>¿Cómo funciona?</h2>
-        <p>Ves una vista previa gratis. Si te gusta, pagás por Mercado Pago y descargás la receta completa.</p>
-        <a class="link" href="receta-empanadas.html">Probar con una receta →</a>
+    <!-- CARD 2 (ejemplo) -->
+    <article class="recipe-card">
+      <img class="recipe-img" src="img/otra.jpg" alt="Otra receta">
+      <div class="recipe-body">
+        <h3>Otra receta</h3>
+        <p>Descripción breve de la receta.</p>
+        <ul>
+          <li><b>Tiempo:</b> 15–25 min</li>
+          <li><b>Rinde:</b> 2–4</li>
+        </ul>
+        <a class="btn" href="#">Ver más</a>
       </div>
-    </section>
-  </main>
+    </article>
+  </div>
+</section>
 
-  <footer>
-    © <span id="y"></span> La Cocina de Santa
-  </footer>
-
-  <script>
-      document.getElementById("y").textContent = new Date().getFullYear();
-    </script>
-    <script>
-  document.getElementById("btnPagar").addEventListener("click", async () => {
-    const r = await fetch("/api/create-preference", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({ title: "Arepa Dominicana", price: 10 })
-    });
-  
-    const data = await r.json();
-    window.location.href = data.init_point;
-  });
-</script>
-</body>
-
-</html>
 
 
